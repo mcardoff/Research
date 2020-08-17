@@ -8,7 +8,7 @@ import sys
 from scipy.special import spherical_jn
 
 # number of terms to calculate, should be >= x
-nmax = 5
+nmax = int(sys.argv[2])
 npts = 1000
 
 #radius of the sphere
@@ -16,7 +16,7 @@ a = 50
 R = 2*a
     
 #wavelengths (free space) to calculate for, in nm
-wlr = np.linspace(80,500,npts)
+wlr = np.linspace(10,1000,npts)
 
 def Refl(m,wl,d):
     x = np.pi*d/wl
@@ -190,7 +190,7 @@ Rs  = []
 Ts  = []
 for w in wlr:
     # get index of ref via dielectric const
-    m = IndexAl(w)
+    m = Dielec(w)
     cer.append(Cext(m,w,2*a)/(np.pi*(a**2)))
     csr.append(Csca(m,w,2*a)/(np.pi*(a**2)))
     car.append(Cabs(m,w,2*a)/(np.pi*(a**2)))
