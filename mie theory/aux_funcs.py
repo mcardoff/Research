@@ -1,7 +1,11 @@
+# different indices of refraction
+# Au : interpolatedIndexAu()
+# In : IndexIn()
+
 import numpy as np
 import cmath as cm
 import scipy as sp
-from scipy.interpolate import interp1d
+import scipy.interpolate
 from scipy.special import spherical_jn, spherical_yn, h1vp, h2vp
 
 #Hankel Functions and respective derivatives
@@ -30,17 +34,43 @@ def psip(n,r):
 def xip(n,r):
     return h1(n,r) + r * h1p(n, r)
 
-#Logarithmic Derivative
+# Logarithmic Derivative
 def D(n,r):
     return psi(n-1,r)/psi(n,r)-n/r
 
+# Scattering expansion coefficients an, bn
+def acoeff(n,m,x):
+    num = (D(n,m*x)/m + n/x)*psi(n,x)-psi(n-1,x)
+    den = (D(n,m*x)/m + n/x)*xi(n,x)-xi(n-1,x)
+    return num / den
 
-redata = np.genfromtxt('/home/mcard/school/Research/mie theory/e1.csv', delimiter=',')
-imdata = np.genfromtxt('/home/mcard/school/Research/mie theory/e2.csv', delimiter=',')
-# e1 = sp.interpolate.interp1d(redata[:,0],redata[:,1],kind='cubic',fill_value='extrapolate')
-# e2 = sp.interpolate.interp1d(imdata[:,0],imdata[:,1],kind='cubic',fill_value='extrapolate')
+def bcoeff(n,m,x):
+    num = (m*D(n,m*x)+n/x)*psi(n,x)-psi(n-1,x)
+    den = (m*D(n,m*x)+n/x)*xi(n,x)-xi(n-1,x)
+    return num / den
+
+# interpolated index of refraction for Gold
+def interpolatedIndexAu(wl):
+    path = '/home/mcard/school/Research/mie theory/dielec data/'
+    redata = np.genfromtxt('/home/mcard/school/Research/mie theory/dielec data/JohnsonAuNVals.csv', delimiter=',')
+    imdata = np.genfromtxt('/home/mcard/school/Research/mie theory/dielec data/JohnsonAuKVals.csv', delimiter=',')
+    n = sp.interpolate.interp1d(redata[:,0],redata[:,1],kind='cubic',fill_value='extrapolate')
+    k = sp.interpolate.interp1d(imdata[:,0],imdata[:,1],kind='cubic',fill_value='extrapolate')
+    return (n(wl)+k(wl)*1j)
+
+# Example index of Refraction, reference to wikipedia page:
+# https://en.wikipedia.org/wiki/Mie_scattering#/media/File:N4wiki.svg
+def IndexEx(wl):
+    return 4
+# Aluminum
+def IndexAl(wl):
+    e = 1239.841984 / wl
+    einf = 0.5
+    wp = 15
+    im = 0.1
+    return cm.sqrt((einf*((wp)**2)/(e**2)+1) + im*1j)
 # Dielectric constant of Niobium
-def DielecNb(wl):
+def IndexNb(wl):
     e = 1239.841984 / wl
     e1 = -0.000469 + 0.0315*(e) - 0.89199 * (e**2) + 13.8147 * (e**3) - 126.3859 * (e**4) + 683.1397 * (e**5) - 2019.5053 * (e**6) + 2513.7193 * (e**7)
     # e2 = -0.0024531 * (e) + 0.13912 * (e**1) + -3.328 * (e**2) + 43.4499 * (e**3) + -333.5553 * (e**4) + 1501.064 * (e**5) + -3653.4889 * (e**6) + 3700.3889 * (e**7)
@@ -48,11 +78,11 @@ def DielecNb(wl):
     return cm.sqrt(e1+e2*1j)
 
 # Dielectric constant of Indium
-def Dielec(wl):
+def IndexIn(wl):
     e = 1239.841984 / wl
     einf = 1.2
     wp = 11.6
-    im = 0.2
+    im = 0.1
     return cm.sqrt(einf*(1-((wp)**2)/(e**2)) + im*1j)
 
 #Index of refraction (exp fit to expt data)
@@ -63,7 +93,7 @@ def Min(wl):
     # i = 1.01808 + 0.00713627*wl - 3.50259e-7 * wl**2
     # return r + i*1j
 
-# good range is 80 to 500
+# good range is 80 to 500 nm
 def IndexAl(wl):
     # e = 1239.841984 / wl
     n = 1.360 + -0.0235 * (wl**1) + 1.64E-04 * (wl**2) + -5.49E-07 * (wl**3) + 9.50E-10 * (wl**4) + -7.82E-13 * (wl**5) + 2.39E-16 * (wl**6)
@@ -76,14 +106,4 @@ def Min2(wl):
     k = (-3/8022379097e-6)*(wl**2)+(1.34531048509e-2)*wl-8.3953304203e-1
     return n + 1j*k
 
-#Scattering expansion coefficients an, bn
-def acoeff(n,m,x):
-    num = (D(n,m*x)/m + n/x)*psi(n,x)-psi(n-1,x)
-    den = (D(n,m*x)/m + n/x)*xi(n,x)-xi(n-1,x)
-    return num / den
-
-def bcoeff(n,m,x):
-    num = (m*D(n,m*x)+n/x)*psi(n,x)-psi(n-1,x)
-    den = (m*D(n,m*x)+n/x)*xi(n,x)-xi(n-1,x)
-    return num / den
 

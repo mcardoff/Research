@@ -10,6 +10,7 @@ from scipy.special import spherical_jn
 # number of terms to calculate, should be >= x
 nmax = 15
 npts = 1000
+nplots = 5
 
 # radius of the sphere
 # a = 50
@@ -18,8 +19,8 @@ npts = 1000
 # wavelengths (free space) to calculate for, in nm
 wlr = np.linspace(10,1000,npts)
 
-# new testing stuff
-avals = [25*x for x in range(1,11)]
+# Radius
+avals = [25*x for x in range(1,nplots+1)]
 
 def Refl(m,wl,d):
     x = np.pi*d/wl
@@ -185,44 +186,29 @@ def Cext(m,wl,diameter):
 def Cabs(m,wl,diameter):
     return Cext(m,wl,diameter) - Csca(m,wl,diameter)
 
-#Indium Sphere
+plt.figure()
+title = "Extinction"
+plt.title(title)
 for (i,aval) in enumerate(avals):
     cer = []
-    csr = []
-    car = []
-    Rs  = []
-    Ts  = []
+    # csr = []
+    # car = []
     for w in wlr:
-        # get index of ref via dielectric const
+        # get index of ref via auxiliary functions
         m = IndexIn(w)
         cer.append(Cext(m,w,2*aval)/(np.pi*(aval**2)))
-        csr.append(Csca(m,w,2*aval)/(np.pi*(aval**2)))
-        car.append(Cabs(m,w,2*aval)/(np.pi*(aval**2)))
-        # Rs.append(Refl(m,w,2*a))
-        # Ts.append(Trans(m,w,2*a))
-        
-        # S=[]
-        # for w in range(len(wlr)):
-    title = "Diameter: " + str(2*aval) + " nm " #+ " , Points: " + str(npts)
-    plt.figure(i)
-    plt.title(title)
-    plt.plot(wlr,cer,color="C1",label="Qext, "+str(nmax)+" terms")
-    plt.plot(wlr,csr,color="C2",label="Qsca, "+str(nmax)+" terms")
-    plt.plot(wlr,car,color="C3",label="Qabs, "+str(nmax)+" terms")
-    plt.legend()
-    if len(sys.argv) > 1:
-        plt.savefig(str(sys.argv[1])+"_d="+str(2*aval)+".png")
+        # csr.append(Csca(m,w,2*aval)/(np.pi*(aval**2)))
+        # car.append(Cabs(m,w,2*aval)/(np.pi*(aval**2)))
+
+    plt.plot(wlr,cer,color=("C"+str(i)),label="diam="+str(2*aval)+"nm")
+    # plt.plot(wlr,csr,color=("C"+str(i)),label="diam="+str(2*aval)+"nm")
+    # plt.plot(wlr,car,color=("C"+str(i)),label="diam="+str(2*aval)+"nm")
+
+plt.legend()
+if len(sys.argv) > 1:
+    plt.savefig(str(sys.argv[1])+".png")
+else:
     plt.show()
 
-    # S.append(Rs[w]+Ts[w])
     
-# plt.figure(2)
-# plt.title("Diameter: %i nm"%(int(2*a)))
-# plt.plot(wlr,Rs,color='red',label="Backward Scattering Fraction")
-# plt.plot(wlr,S,color='green',label="Sum")
-# plt.plot(wlr,Ts,color='blue',label="Forward Scattering Fraction")
-# plt.xlabel("wavelength (nm)")
-# plt.legend()
-# plt.show()
-
 

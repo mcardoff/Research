@@ -12,14 +12,16 @@ nmax = 15
 npts = 1000
 
 # radius of the sphere
-# a = 50
-# R = 2*a
+a = 50
+R = 2*a
     
 # wavelengths (free space) to calculate for, in nm
-wlr = np.linspace(10,1000,npts)
+wlr = np.linspace(200,1000,npts)
+# print(len(wlr))
+
 
 # new testing stuff
-avals = [25*x for x in range(1,11)]
+avals = [50*x for x in range(1,6)]
 
 def Refl(m,wl,d):
     x = np.pi*d/wl
@@ -58,7 +60,7 @@ def Refl(m,wl,d):
     
     flux_r = 0
     flux_i = 0
-    rho = k*d
+    rho = k*R
     dtheta = 2*np.pi/ntheta
     for i in range(len(thetar)):
         theta = thetar[i]
@@ -82,8 +84,8 @@ def Refl(m,wl,d):
                 Hsf_i+=-Evals[n]*(-np.cos(phi)*tauvals[i][n]*spherical_jn(n,rho)+1j*np.cos(phi)*pivals[i][n]*zp)
                 Hst_i+=-Evals[n]*(-np.sin(phi)*pivals[i][n]*spherical_jn(n,rho)+1j*np.sin(phi)*tauvals[i][n]*zp)
 
-            Sr = ((Esf)*np.conj(Hst)-(Est)*np.conj(Hsf))*(d**2)*np.sin(theta)*dtheta*dphi
-            Si = -(Esf_i*np.conj(Hst_i)-Est_i*np.conj(Hsf_i))*(d**2)*np.sin(theta)*dtheta*dphi
+            Sr = ((Esf)*np.conj(Hst)-(Est)*np.conj(Hsf))*(R**2)*np.sin(theta)*dtheta*dphi
+            Si = -(Esf_i*np.conj(Hst_i)-Est_i*np.conj(Hsf_i))*(R**2)*np.sin(theta)*dtheta*dphi
             flux_r += 0.5*Sr
             flux_i += 0.5*Si                 
     #print(flux_r)
@@ -128,7 +130,7 @@ def Trans(m,wl,d):
         bvals.append(bcoeff(n,m,x))
     flux_r = 0
     flux_i = 0
-    rho = k*d
+    rho = k*R
     dtheta = 2*np.pi/ntheta
     for i in range(len(thetar)):
         theta = thetar[i]
@@ -152,8 +154,8 @@ def Trans(m,wl,d):
                 Hsf_i+=-Evals[n]*(-np.cos(phi)*tauvals[i][n]*spherical_jn(n,rho)+1j*np.cos(phi)*pivals[i][n]*zp)
                 Hst_i+=-Evals[n]*(-np.sin(phi)*pivals[i][n]*spherical_jn(n,rho)+1j*np.sin(phi)*tauvals[i][n]*zp)
 
-            Sr = ((Esf)*np.conj(Hst)-(Est)*np.conj(Hsf))*(d**2)*np.sin(theta)*dtheta*dphi
-            Si = (Esf_i*np.conj(Hst_i)-Est_i*np.conj(Hsf_i))*(d**2)*np.sin(theta)*dtheta*dphi
+            Sr = ((Esf)*np.conj(Hst)-(Est)*np.conj(Hsf))*(R**2)*np.sin(theta)*dtheta*dphi
+            Si = (Esf_i*np.conj(Hst_i)-Est_i*np.conj(Hsf_i))*(R**2)*np.sin(theta)*dtheta*dphi
             flux_r += 0.5*Sr
             flux_i += 0.5*Si                 
     #print(flux_r)
@@ -186,34 +188,22 @@ def Cabs(m,wl,diameter):
     return Cext(m,wl,diameter) - Csca(m,wl,diameter)
 
 #Indium Sphere
-for (i,aval) in enumerate(avals):
-    cer = []
-    csr = []
-    car = []
-    Rs  = []
-    Ts  = []
-    for w in wlr:
-        # get index of ref via dielectric const
-        m = IndexIn(w)
-        cer.append(Cext(m,w,2*aval)/(np.pi*(aval**2)))
-        csr.append(Csca(m,w,2*aval)/(np.pi*(aval**2)))
-        car.append(Cabs(m,w,2*aval)/(np.pi*(aval**2)))
-        # Rs.append(Refl(m,w,2*a))
-        # Ts.append(Trans(m,w,2*a))
-        
-        # S=[]
-        # for w in range(len(wlr)):
-    title = "Diameter: " + str(2*aval) + " nm " #+ " , Points: " + str(npts)
-    plt.figure(i)
-    plt.title(title)
-    plt.plot(wlr,cer,color="C1",label="Qext, "+str(nmax)+" terms")
-    plt.plot(wlr,csr,color="C2",label="Qsca, "+str(nmax)+" terms")
-    plt.plot(wlr,car,color="C3",label="Qabs, "+str(nmax)+" terms")
-    plt.legend()
-    if len(sys.argv) > 1:
-        plt.savefig(str(sys.argv[1])+"_d="+str(2*aval)+".png")
-    plt.show()
-
+cer = []
+csr = []
+car = []
+Rs  = []
+Ts  = []
+for w in wlr:
+    # get index of ref via dielectric const
+    m = IndexIn(w)
+    cer.append(Cext(m,w,2*a)/(np.pi*(a**2)))
+    csr.append(Csca(m,w,2*a)/(np.pi*(a**2)))
+    car.append(Cabs(m,w,2*a)/(np.pi*(a**2)))
+    # Rs.append(Refl(m,w,2*a))
+    # Ts.append(Trans(m,w,2*a))
+    
+# S=[]
+# for w in range(len(wlr)):
     # S.append(Rs[w]+Ts[w])
     
 # plt.figure(2)
@@ -225,4 +215,14 @@ for (i,aval) in enumerate(avals):
 # plt.legend()
 # plt.show()
 
+title = "Diameter: " + str(R) + " nm " #+ " , Points: " + str(npts)
 
+plt.figure(1)
+plt.title(title)
+plt.plot(wlr,cer,color="C1",label="Qext, "+str(nmax)+" terms")
+plt.plot(wlr,csr,color="C2",label="Qsca, "+str(nmax)+" terms")
+plt.plot(wlr,car,color="C3",label="Qabs, "+str(nmax)+" terms")
+plt.legend()
+if len(sys.argv) > 1:
+    plt.savefig(sys.argv[1])
+plt.show()
