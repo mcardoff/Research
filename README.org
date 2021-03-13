@@ -1,0 +1,7 @@
+-*-mode-org-*-
+* README
+This is a repo meant to hold any programs that I have been working on for my current research projects, such that I can fluently transfer the files back and forth between my main machine and my laptop, instead of having to email stuff back and forth
+** Current Project
+This repo does not currently have a lot of important contents, but so far there is:
+- Mie Theory: Project with Dr. Z
+- Arnold Density of States: Program possibly to be used with Dr. Z
