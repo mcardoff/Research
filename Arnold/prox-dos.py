@@ -12,18 +12,18 @@ plt.tick_params(which='minor',length=5)
 #plt.minorticks_on()
 
 #Import CSVs
-datahigh = [[],[]]
-with open("./high.csv") as high:
-    rdr = csv.reader(high, delimiter=',')
-    for row in rdr:
-        datahigh[0].append(float(row[0]))
-        datahigh[1].append(float(row[1]))
-datalow = [[],[]]
-with open("./low.csv") as low:
-    rdr = csv.reader(low, delimiter=',')
-    for row in rdr:
-        datalow[0].append(float(row[0]))
-        datalow[1].append(float(row[1]))
+#datahigh = [[],[]]
+#with open("./high.csv") as high:
+#    rdr = csv.reader(high, delimiter=',')
+#    for row in rdr:
+#        datahigh[0].append(float(row[0]))
+#        datahigh[1].append(float(row[1]))
+#datalow = [[],[]]
+#with open("./low.csv") as low:
+#    rdr = csv.reader(low, delimiter=',')
+#    for row in rdr:
+#        datalow[0].append(float(row[0]))
+#        datalow[1].append(float(row[1]))
 
 #Fit parameters
 DeltaS = 1.38

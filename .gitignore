@@ -15,3 +15,5 @@
 /sullivan.tex
 /sullivan.toc
 /texput.log
+/*.tex
+*.log

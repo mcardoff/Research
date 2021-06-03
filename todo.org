@@ -1,8 +1,10 @@
-#-*- mode: org -*-
-#+STARTUP: showall
+#+STARTUP: overview
+#+TITLE: Notes for Dr Z Research
+#+AUTHOR: Michael Cardiff
+#+DATE: 03 Jun 2021
 
 * Meeting on 9 Jul 2020
-** DONE Chnges to program
+** DONE Changes to program
 - [X] Change number of points used
   - variable: npoints
 - [X] change particle size
@@ -16,7 +18,7 @@
   - Import from File -> Import Data
   - Import data to Statistics (C-i)
 - Right click on data file under analysis data
-  - Click blank  plus
+  - Click blank plus below the right side of graph to add analysis data
   - Open fit didv
     - CHANGE from BTK
     - SIS d-wave most often
@@ -25,9 +27,49 @@
       - Super interacting with normal
   - Vmax sets x axis range
   - Do not put gamma to 0
-  - Gamma increases height of peaks
+  - Gamma inc/mie theory/finalimgs/reases height of peaks
   - Delta broadens width
   - Name : PCT Analysis v3
 * Meeting 3 Jun 2021
-Working on tunelling program
+** Log
+Working on tunneling program
+** Tunneling Program Notes
+Comprehensive guide to How to use the program
+- Just start with a CSV of your data
+- Open up the drawers on the top until you get to Statistics
+- Right click on statistics, click on import wizard to import data:
+  - Choose your CSV file in the first box
+    - MAKE SURE YOUR CSV HAS TWO COLUMNS WITH THE FOLLOWING INFO
+    - Row 0: Quantities, for example:
+      | Voltage | Current | dIdV |
+    - Row 1: Units for the avove quantities for example:
+      | mV | mA | S |
+    - Overall you should have:
+      | Voltage | Current | dIdV |
+      | mV      | mA      | S    |
+  - In the delimeter section, choose comma
+  - Check the three boxes on the right hand side that tell where the headers are
+    - The first two should be 0
+    - Unit Row Should be 1
+  - There will be a section of two rows that should show your quantity and unit row
+    - If something in the first row is red, right click on them and choose the correct quantity (Voltage/Current/dIdV)
+    - If something in the second row is red, right click on them and choose the correct unit, probably one of (mV,mA,S)
+- Check that the data is what is expected:
+  - Click into statistics, then the name of the imported file, and the various quantities should appear
+- Select =dIdV= and under the plot, below the left edge of the x-axis, there should be a plus sign, click it
+- Now there should be a section called *Analysis Data* where you can again locate =dIdV=, right click on it and select *Fit dIdV* from the menu
+  - In the fit Dialog you have many options, but before anything is done, change the following:
+    - If $\gamma=0$ change it to be something above zero, 0.01 is standard
+    - By default, the temperature (located on the botto) is 0, change it to the known temperature.
+  - Choose the correct fit type based on the data, by default it is BTK, the other options are:
+    - BTK
+    - BCS
+    - SIN s-wave
+    - SIN d-wave
+    - SIS s-wave
+    - SIS d-wave
+    - And a few more
+  - Adjust fit parameters until the data matches the fit
+
+
 
