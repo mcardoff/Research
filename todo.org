@@ -1,0 +1,33 @@
+#-*- mode: org -*-
+#+STARTUP: showall
+
+* Meeting on 9 Jul 2020
+** DONE Chnges to program
+- [X] Change number of points used
+  - variable: npoints
+- [X] change particle size
+  - variable: a or R
+- [X] change series terms
+  - variable: nmax
+- [X] Change material to Nb
+  - Involves interpolation, maybe try something else
+** Tunneling Program Notes
+- Data is in specific formatted text file
+  - Import from File -> Import Data
+  - Import data to Statistics (C-i)
+- Right click on data file under analysis data
+  - Click blank  plus
+  - Open fit didv
+    - CHANGE from BTK
+    - SIS d-wave most often
+      - Super interacting with super
+    - SIN d-Wave as well
+      - Super interacting with normal
+  - Vmax sets x axis range
+  - Do not put gamma to 0
+  - Gamma increases height of peaks
+  - Delta broadens width
+  - Name : PCT Analysis v3
+* Meeting 3 Jun 2021
+Working on tunelling program
+
