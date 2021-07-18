@@ -80,3 +80,8 @@ Comprehensive guide to How to use the program
   - Play around with diameters to match paper figure
   - Change plot terms to only have =nmax= = 2 or something
 - This summer, working on COMSOL
+** Tasks
+- [X] Expand plots to include 600ish
+- [X] Do spheres of diameter 100, 150, 200
+- [ ] Play around with diameters to match paper figure
+- [X] Change plot terms to only have =nmax= = 2 or something

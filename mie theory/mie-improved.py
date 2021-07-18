@@ -8,18 +8,14 @@ import sys
 from scipy.special import spherical_jn
 
 # number of terms to calculate, should be >= x
-nmax = 5
+nmax = 2
 npts = 1000
 
-# radius of the sphere
-# a = 50
-# R = 2*a
-    
 # wavelengths (free space) to calculate for, in nm
-wlr = np.linspace(100,500,npts)
+wlr = np.linspace(100,650,npts)
 
 # new testing stuff
-avals = [50]
+avals = [50, 75, 100]
 # avals = [50*x for x in range(1,6)]
 
 def Refl(m,wl,d):
@@ -214,7 +210,7 @@ for (i,aval) in enumerate(avals):
     plt.xlabel("Wavelength (nm)")
     plt.ylabel("Cross Section Amplitude (VA)")
     if len(sys.argv) > 1:
-        plt.savefig(str(sys.argv[1])+"_d="+str(2*aval)+".png")
+        plt.savefig("./imgbin/"+str(sys.argv[1])+"_d="+str(2*aval)+".png")
     plt.show()
 
     # S.append(Rs[w]+Ts[w])
