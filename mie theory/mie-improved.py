@@ -8,7 +8,7 @@ import sys
 from scipy.special import spherical_jn
 
 # number of terms to calculate, should be >= x
-nmax = 15
+nmax = 5
 npts = 1000
 
 # radius of the sphere
@@ -196,9 +196,9 @@ for (i,aval) in enumerate(avals):
     for w in wlr:
         # get index of ref via dielectric const
         m = IndexIn(w)
-        # cer.append(Cext(m,w,2*aval)/(np.pi*(aval**2)))
+        cer.append(Cext(m,w,2*aval)/(np.pi*(aval**2)))
         csr.append(Csca(m,w,2*aval)/(np.pi*(aval**2)))
-        # car.append(Cabs(m,w,2*aval)/(np.pi*(aval**2)))
+        car.append(Cabs(m,w,2*aval)/(np.pi*(aval**2)))
         # Rs.append(Refl(m,w,2*a))
         # Ts.append(Trans(m,w,2*a))
         
@@ -207,9 +207,9 @@ for (i,aval) in enumerate(avals):
     title = "Diameter: " + str(2*aval) + " nm " #+ " , Points: " + str(npts)
     plt.figure(i)
     plt.title(title)
-    # plt.plot(wlr,cer,color="C1",label="Qext, "+str(nmax)+" terms")
+    plt.plot(wlr,cer,color="C1",label="Qext, "+str(nmax)+" terms")
     plt.plot(wlr,csr,color="C2",label="Qsca, "+str(nmax)+" terms")
-    # plt.plot(wlr,car,color="C3",label="Qabs, "+str(nmax)+" terms")
+    plt.plot(wlr,car,color="C3",label="Qabs, "+str(nmax)+" terms")
     plt.legend()
     plt.xlabel("Wavelength (nm)")
     plt.ylabel("Cross Section Amplitude (VA)")

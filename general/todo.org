@@ -30,7 +30,7 @@
   - Gamma inc/mie theory/finalimgs/reases height of peaks
   - Delta broadens width
   - Name : PCT Analysis v3
-* Meeting 3 Jun 2021
+* Meeting 03 Jun 2021
 ** Log
 Working on tunneling program
 ** Tunneling Program Notes
@@ -70,6 +70,13 @@ Comprehensive guide to How to use the program
     - SIS d-wave
     - And a few more
   - Adjust fit parameters until the data matches the fit
-
-
-
+* Meeting 15 Jun 2021
+** Log
+- Work on figures for last summer
+  - New Paper, only one now, me and Neel co-authors
+  - Compare COMSOL to Mie Theory (it pretty much already does)
+  - Expand plots to include 600ish
+  - Do spheres of diameter 100, 150, 200
+  - Play around with diameters to match paper figure
+  - Change plot terms to only have =nmax= = 2 or something
+- This summer, working on COMSOL
